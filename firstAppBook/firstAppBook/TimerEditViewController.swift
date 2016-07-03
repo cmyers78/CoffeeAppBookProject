@@ -52,13 +52,18 @@ class TimerEditViewController: UIViewController {
     }
     
     @IBAction func cancelWasPressed(sender: AnyObject) {
+        delegate?.timerEditViewControllerDidCancel(self)
+        
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        
+        
     }
     
     @IBAction func doneWasPressed(sender: AnyObject) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         timerModel.name = nameField.text ?? ""
         timerModel.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
+        delegate?.timerEditViewControllerDidSave(self)
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
     }

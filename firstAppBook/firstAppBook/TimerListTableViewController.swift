@@ -21,15 +21,15 @@ class TimerListTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem()
         
         coffeeTimers = [
-            CoffeeTimerModel(name: "Colombian", duration: 240),
-            CoffeeTimerModel(name: "Mexican", duration: 200)
+            CoffeeTimerModel(name: "Colombian", duration: 240, type: .Coffee),
+            CoffeeTimerModel(name: "Mexican", duration: 200, type: .Coffee)
         ]
         
         teaTimers = [
         
-            CoffeeTimerModel(name: "Green Tea", duration: 400),
-            CoffeeTimerModel(name: "Oolong", duration: 400),
-            CoffeeTimerModel(name: "Rooibos", duration: 480)
+            CoffeeTimerModel(name: "Green Tea", duration: 400, type: .Tea),
+            CoffeeTimerModel(name: "Oolong", duration: 400, type: .Tea),
+            CoffeeTimerModel(name: "Rooibos", duration: 480, type: .Tea)
         ]
     }
     
@@ -94,7 +94,14 @@ class TimerListTableViewController: UITableViewController {
         
         
     }
+    func timerEditViewControllerDidCancel(viewController : TimerEditViewController) {
+        
+        
+    }
     
+    func timerEditViewControllerDidSave(viewController : TimerEditViewController) {
+        
+    }
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         if identifier == "pushDetail" {
@@ -126,6 +133,8 @@ class TimerListTableViewController: UITableViewController {
                 let navigationController = segue.destinationViewController as! UINavigationController
                 let editViewController = navigationController.topViewController as! TimerEditViewController
                 editViewController.timerModel = timerModel
+                editViewController.delegate = self
+                
             
             } else if let _ = sender as? UIBarButtonItem {
                 if segue.identifier == "newTimer" {
@@ -133,10 +142,21 @@ class TimerListTableViewController: UITableViewController {
                     let editViewController = navigationController.topViewController as! TimerEditViewController
                     
                     editViewController.creatingNewTimer = true
-                    editViewController.timerModel = CoffeeTimerModel(name: "", duration: 240)
+                    editViewController.timerModel = CoffeeTimerModel(name: "", duration: 240, type: .Coffee)
+                    editViewController.delegate = self
                     
                 }
             }
         }
+    }
+}
+
+extension TimerListTableViewController : TimerEditViewControllerDelegate {
+    func timerEditViewControllerDidCancel(viewController: TimerEditViewController) {
+        <#code#>
+    }
+    
+    func timerEdiViewControllerDidSave(viewController: TimerEditViewController) {
+        <#code#>
     }
 }

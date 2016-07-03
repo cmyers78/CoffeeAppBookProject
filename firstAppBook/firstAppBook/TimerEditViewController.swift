@@ -10,7 +10,7 @@ import UIKit
 
 @objc protocol TimerEditViewControllerDelegate {
     func timerEditViewControllerDidCancel(viewController : TimerEditViewController)
-    func timerEdiViewControllerDidSave(viewController : TimerEditViewController)
+    func timerEditViewControllerDidSave(viewController : TimerEditViewController)
     
 }
 
@@ -18,7 +18,7 @@ class TimerEditViewController: UIViewController {
     
     var timerModel : CoffeeTimerModel!
     
-    var delegate : TimerEditViewControllerDelegate?
+    weak var delegate : TimerEditViewControllerDelegate?
     
     @IBOutlet weak var nameField: UITextField!
 
@@ -65,7 +65,7 @@ class TimerEditViewController: UIViewController {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         timerModel.name = nameField.text ?? ""
         timerModel.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
-        delegate?.timerEdiViewControllerDidSave(self)
+        delegate?.timerEditViewControllerDidSave(self)
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
     }

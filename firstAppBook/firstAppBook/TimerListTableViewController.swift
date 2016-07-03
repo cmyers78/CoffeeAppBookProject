@@ -133,7 +133,7 @@ class TimerListTableViewController: UITableViewController {
                 let navigationController = segue.destinationViewController as! UINavigationController
                 let editViewController = navigationController.topViewController as! TimerEditViewController
                 editViewController.timerModel = timerModel
-                editViewController.delegate = self
+                //editViewController.delegate = self
                 
             
             } else if let _ = sender as? UIBarButtonItem {
@@ -143,7 +143,7 @@ class TimerListTableViewController: UITableViewController {
                     
                     editViewController.creatingNewTimer = true
                     editViewController.timerModel = CoffeeTimerModel(name: "", duration: 240, type: .Coffee)
-                    editViewController.delegate = self
+                    //editViewController.delegate = self
                     
                 }
             }
@@ -151,13 +151,13 @@ class TimerListTableViewController: UITableViewController {
     }
 }
 
-extension TimerListTableViewController : TimerEditViewControllerDelegate {
-    func timerEditViewControllerDidCancel(viewController: TimerEditViewController) {
-        
+extension TimerListTableViewController: TimerEditViewControllerDelegate {
+    func timerEdiViewControllerDidCancel(viewController: TimerEditViewController) {
         
     }
     
-    func timerEditViewControllerDidSave(viewController: TimerEditViewController) {
+    func timerEdiViewControllerDidSave(viewController: TimerEditViewController) {
         
     }
 }
+

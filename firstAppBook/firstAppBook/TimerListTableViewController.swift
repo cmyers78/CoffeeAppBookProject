@@ -153,10 +153,11 @@ class TimerListTableViewController: UITableViewController {
 
 extension TimerListTableViewController : TimerEditViewControllerDelegate {
     func timerEditViewControllerDidCancel(viewController: TimerEditViewController) {
-        <#code#>
+        
+        
     }
     
-    func timerEdiViewControllerDidSave(viewController: TimerEditViewController) {
-        <#code#>
+    func timerEditViewControllerDidSave(viewController: TimerEditViewController) {
+        
     }
 }

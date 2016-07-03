@@ -18,6 +18,8 @@ class TimerEditViewController: UIViewController {
     
     var timerModel : CoffeeTimerModel!
     
+    var delegate : TimerEditViewControllerDelegate?
+    
     @IBOutlet weak var nameField: UITextField!
 
     @IBOutlet weak var minutesLabel: UILabel!
@@ -51,7 +53,7 @@ class TimerEditViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancelWasPressed(sender: AnyObject) {
+    @IBAction func cancelWasPressed(sender: UIBarButtonItem) {
         delegate?.timerEditViewControllerDidCancel(self)
         
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -59,11 +61,11 @@ class TimerEditViewController: UIViewController {
         
     }
     
-    @IBAction func doneWasPressed(sender: AnyObject) {
+    @IBAction func doneWasPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         timerModel.name = nameField.text ?? ""
         timerModel.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
-        delegate?.timerEditViewControllerDidSave(self)
+        delegate?.timerEdiViewControllerDidSave(self)
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
     }

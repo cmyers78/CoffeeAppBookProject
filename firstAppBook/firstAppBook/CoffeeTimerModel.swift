@@ -10,7 +10,7 @@ import UIKit
 
 class CoffeeTimerModel: NSObject {
     
-    var coffeeName : String = ""
+    var name : String = ""
     var duration : Int = 0
     
     override init() {
@@ -18,15 +18,15 @@ class CoffeeTimerModel: NSObject {
         
     }
     
-    init(coffeeName : String, duration: Int) {
+    init(name : String, duration: Int) {
         super.init()
-        self.coffeeName = coffeeName
+        self.name = name
         self.duration = duration
     }
     
     override var description: String {
         get {
-            return "CoffeTimerModel(\(coffeeName)"
+            return "CoffeTimerModel(\(name)"
         }
     }
 

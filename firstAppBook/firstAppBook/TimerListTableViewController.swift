@@ -9,20 +9,25 @@
 import UIKit
 
 class TimerListTableViewController: UITableViewController {
+    
+    var coffeeTimers : [CoffeeTimerModel]!
+    var teaTimers : [CoffeeTimerModel]!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        coffeeTimers = [
+            CoffeeTimerModel(name: "Colombian", duration: 240),
+            CoffeeTimerModel(name: "Mexican", duration: 200)
+        ]
+        
+        teaTimers = [
+        
+            CoffeeTimerModel(name: "Green Tea", duration: 400),
+            CoffeeTimerModel(name: "Oolong", duration: 400),
+            CoffeeTimerModel(name: "Rooibos", duration: 480)
+        ]
     }
 
     // MARK: - Table view data source
@@ -33,21 +38,40 @@ class TimerListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 10
+        if section == 0 {
+            return coffeeTimers.count
+        } else {
+            return teaTimers.count
+        }
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-
-        let text = "Section \(indexPath.section), row \(indexPath.row)"
-        cell.textLabel?.text = text
+        
+        let timerModel: CoffeeTimerModel = {
+        
+        if indexPath.section == 0 {
+            return self.coffeeTimers[indexPath.row]
+        } else {
+            return self.teaTimers[indexPath.row]
+        }
+        
+        }()
+        
+        cell.textLabel?.text = timerModel.name
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Section \(section)"
+        
+        if section == 0 {
+            return "Coffees"
+        } else {
+            return "Teas"
+        }
     }
     
     

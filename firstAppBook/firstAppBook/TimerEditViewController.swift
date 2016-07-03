@@ -28,7 +28,7 @@ class TimerEditViewController: UIViewController {
         
         let numberOfMinutes = Int(timerModel.duration / 60)
         let numberOfSeconds = Int(timerModel.duration % 60)
-        nameField.text = timerModel.coffeeName
+        nameField.text = timerModel.name
         updateLabelsWithMinutes(numberOfMinutes, seconds: numberOfSeconds)
         minutesSlider.value = Float(numberOfMinutes)
         secondsSlider.value = Float(numberOfSeconds)
@@ -48,7 +48,7 @@ class TimerEditViewController: UIViewController {
     
     @IBAction func doneWasPressed(sender: AnyObject) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        timerModel.coffeeName = nameField.text ?? ""
+        timerModel.name = nameField.text ?? ""
         timerModel.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         

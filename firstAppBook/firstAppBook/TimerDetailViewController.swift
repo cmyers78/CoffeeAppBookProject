@@ -17,7 +17,7 @@ class TimerDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = timerModel.coffeeName
+        self.title = timerModel.name
         self.durationLabel.text = "\(timerModel.duration / 60) min \(timerModel.duration % 60) sec"
         
         

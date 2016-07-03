@@ -125,7 +125,16 @@
                             <outlet property="delegate" destination="qcb-P0-lxT" id="fA6-KK-iEN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tOD-RC-pkx"/>
+                    <navigationItem key="navigationItem" id="tOD-RC-pkx">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Fkf-lW-a4n">
+                            <connections>
+                                <segue destination="v0g-lw-xn1" kind="modal" identifier="newTimer" id="kHr-NY-7Jc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="v0g-lw-xn1" kind="modal" identifier="editDetail" id="nra-HZ-Cd7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EdO-bt-t8L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -175,4 +184,7 @@
             <point key="canvasLocation" x="-9" y="964"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="kHr-NY-7Jc"/>
+    </inferredMetricsTieBreakers>
 </document>

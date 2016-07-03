@@ -8,6 +8,12 @@
 
 import UIKit
 
+@objc protocol TimerEditViewControllerDelegate {
+    func timerEditViewControllerDidCancel(viewController : TimerEditViewController)
+    func timerEdiViewControllerDidSave(viewController : TimerEditViewController)
+    
+}
+
 class TimerEditViewController: UIViewController {
     
     var timerModel : CoffeeTimerModel!
@@ -21,6 +27,8 @@ class TimerEditViewController: UIViewController {
     @IBOutlet weak var secondsLabel: UILabel!
     
     @IBOutlet weak var secondsSlider: UISlider!
+    
+    var creatingNewTimer = false
     
     
     override func viewDidLoad() {
@@ -36,6 +44,7 @@ class TimerEditViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

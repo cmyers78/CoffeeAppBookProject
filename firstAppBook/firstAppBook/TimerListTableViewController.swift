@@ -13,6 +13,7 @@ class TimerListTableViewController: UITableViewController {
     var coffeeTimers : [CoffeeTimerModel]!
     var teaTimers : [CoffeeTimerModel]!
     
+    var delegate : TimerEditViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,15 @@ class TimerListTableViewController: UITableViewController {
             CoffeeTimerModel(name: "Rooibos", duration: 480)
         ]
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if presentedViewController != nil {
+            tableView.reloadData()
+        }
+        
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -76,6 +85,16 @@ class TimerListTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        guard tableView.editing else {return}
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        performSegueWithIdentifier("editDetail", sender: cell)
+        
+        
+    }
+    
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         if identifier == "pushDetail" {
@@ -88,8 +107,7 @@ class TimerListTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "pushDetail" {
-            let cell = sender as! UITableViewCell
+        if let cell = sender as? UITableViewCell{
             let indexPath = tableView.indexPathForCell(cell)!
             
             let timerModel : CoffeeTimerModel = {
@@ -100,10 +118,25 @@ class TimerListTableViewController: UITableViewController {
                 }
             } ()
             
+            if segue.identifier == "pushDetail" {
             
             let detailViewController = segue.destinationViewController as! TimerDetailViewController
-            detailViewController.timerModel = timerModel
+                detailViewController.timerModel = timerModel
+            } else if segue.identifier == "editDetail" {
+                let navigationController = segue.destinationViewController as! UINavigationController
+                let editViewController = navigationController.topViewController as! TimerEditViewController
+                editViewController.timerModel = timerModel
             
+            } else if let _ = sender as? UIBarButtonItem {
+                if segue.identifier == "newTimer" {
+                    let navigationController = segue.destinationViewController as! UINavigationController
+                    let editViewController = navigationController.topViewController as! TimerEditViewController
+                    
+                    editViewController.creatingNewTimer = true
+                    editViewController.timerModel = CoffeeTimerModel(name: "", duration: 240)
+                    
+                }
+            }
         }
     }
 }

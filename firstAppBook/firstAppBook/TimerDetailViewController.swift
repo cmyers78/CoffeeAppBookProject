@@ -37,15 +37,63 @@ class TimerDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func timerFired() {
+        timeRemaining -= 1
+        if timeRemaining > 0 {
+            countdownLabel.text = String(format: "%d:%02d",
+            timeRemaining / 60, timeRemaining % 60)
+            
+        } else {
+            navigationItem.setHidesBackButton(false, animated: true)
+            countdownLabel.text = "Timer completed";
+            startStopButton.setTitle("Start", forState: .Normal)
+            timer?.invalidate()
+            self.timer = nil
+        }
+    }
+    
+    func startTimer() {
+        navigationItem.setHidesBackButton(true, animated: true)
+        startStopButton.setTitle("Stop", forState: .Normal)
+        
+        timeRemaining = timerModel.duration
+        countdownLabel.text = String(format: "%d:%02d", timeRemaining / 60, timeRemaining % 60)
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(TimerDetailViewController.timerFired), userInfo: nil, repeats: true)
+    }
+    
+    enum StopTimerReason {
+        // reasons (cases) why timer could be stopped
+        case Cancelled
+        case Completed
+        
+        // message that shows when timer is stopped and logic of which case to use
+        func message() -> String {
+            switch self {
+            case .Cancelled:
+                return "Timer Cancelled"
+            case .Completed:
+                return "Timer Completed"
+            }
+        }
+    }
+    
+    func stopTimer(reason : StopTimerReason) {
+        navigationItem.setHidesBackButton(false, animated: true)
+        countdownLabel.text = reason.message()
+        startStopButton.setTitle("Start", forState: .Normal)
+        timer?.invalidate()
+        timer = nil
+    }
+    
     @IBAction func buttonWasPressed(sender: UIButton) {
         print("Button was pressed")
         
-        if let nonOptionalTimer = timer {
+        if let _ = timer {
+            stopTimer(.Cancelled)
             
-            nonOptionalTimer.invalidate()
-            timer = nil
         } else {
-            timeRemaining = timerModel.duration
+            startTimer()
         }
     }
 

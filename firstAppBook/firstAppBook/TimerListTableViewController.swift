@@ -8,7 +8,23 @@
 
 import UIKit
 
+extension Array {
+    
+    mutating func moveFrom(source: Int, toDestination destination: Int) {
+        
+        let object = removeAtIndex(source)
+        insert(object, atIndex: destination)
+    }
+}
+
+
 class TimerListTableViewController: UITableViewController {
+    
+    enum TableSection : Int {
+        case Cofee = 0
+        case Tea
+        case NumberOfSections
+    }
     
     var coffeeTimers : [CoffeeTimerModel]!
     var teaTimers : [CoffeeTimerModel]!
@@ -42,10 +58,19 @@ class TimerListTableViewController: UITableViewController {
         
     }
     // MARK: - Table view data source
+    
+    func timerModelFromIndexPath(indexPath: NSIndexPath) -> CoffeeTimerModel {
+        
+        if indexPath.section == 0 {
+            return coffeeTimers[indexPath.row]
+        } else {
+            return teaTimers[indexPath.row]
+        }
+    }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return TableSection.NumberOfSections.rawValue
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,10 +163,23 @@ class TimerListTableViewController: UITableViewController {
         
         if sourceIndexPath.section == 0 {
             return NSIndexPath(forItem: coffeeTimers.count - 1, inSection: 0)
+            
         } else {
             return NSIndexPath(forItem: 0, inSection: 1)
         }
     }
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+        if sourceIndexPath.section == 0 {
+            coffeeTimers.moveFrom(sourceIndexPath.row, toDestination : destinationIndexPath.row)
+        } else {
+            teaTimers.moveFrom(sourceIndexPath.row, toDestination: destinationIndexPath.row)
+        }
+        
+    }
+    
+   // MARK : Segue functions
     
    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         

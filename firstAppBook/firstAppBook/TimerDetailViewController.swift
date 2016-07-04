@@ -17,8 +17,17 @@ class TimerDetailViewController: UIViewController {
     @IBOutlet weak var startStopButton: UIButton!
     
     var timer = NSTimer?()
+    var notification: UILocalNotification?
     
-    var timeRemaining = 0
+    
+    var timeRemaining : NSInteger {
+        guard let fireDate = notification?.fireDate else {
+            return 0
+        }
+        
+        let now = NSDate()
+        return NSInteger(round(fireDate.timeIntervalSinceDate(now)))
+    }
     
     
     override func viewDidLoad() {
@@ -31,6 +40,16 @@ class TimerDetailViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,7 +57,7 @@ class TimerDetailViewController: UIViewController {
     }
     
     func timerFired() {
-        timeRemaining -= 1
+        
         if timeRemaining > 0 {
             countdownLabel.text = String(format: "%d:%02d",
             timeRemaining / 60, timeRemaining % 60)
@@ -51,7 +70,7 @@ class TimerDetailViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: true)
         startStopButton.setTitle("Stop", forState: .Normal)
         
-        timeRemaining = timerModel.duration
+        //timeRemaining = timerModel.duration
         countdownLabel.text = String(format: "%d:%02d", timeRemaining / 60, timeRemaining % 60)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(TimerDetailViewController.timerFired), userInfo: nil, repeats: true)

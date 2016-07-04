@@ -94,15 +94,21 @@ class TimerListTableViewController: UITableViewController {
         
         
     }
-    func timerEditViewControllerDidCancel(viewController : TimerEditViewController) {
-        
-        
+   
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            if indexPath.section == 0 {
+                coffeeTimers.removeAtIndex(indexPath.row)
+            } else {
+                teaTimers.removeAtIndex(indexPath.row)
+            }
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
     }
     
-    func timerEditViewControllerDidSave(viewController : TimerEditViewController) {
-        
-    }
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    
+   override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         if identifier == "pushDetail" {
             if tableView.editing {
@@ -153,11 +159,11 @@ class TimerListTableViewController: UITableViewController {
 
 extension TimerListTableViewController : TimerEditViewControllerDelegate {
     
-    func timeEditViewControllerDidCancel(viewController: TimerEditViewController) {
+    func timerEditViewControllerDidCancel(viewController: TimerEditViewController) {
         
     }
     
-    func timeEditViewControllerDidSave(viewController : TimerEditViewController) {
+    func timerEditViewControllerDidSave(viewController : TimerEditViewController) {
         let model = viewController.timerModel
         let type = model?.type
         

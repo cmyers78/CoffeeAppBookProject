@@ -44,12 +44,7 @@ class TimerDetailViewController: UIViewController {
             timeRemaining / 60, timeRemaining % 60)
             
         } else {
-            navigationItem.setHidesBackButton(false, animated: true)
-            countdownLabel.text = "Timer completed";
-            startStopButton.setTitle("Start", forState: .Normal)
-            timer?.invalidate()
-            self.timer = nil
-        }
+            stopTimer(.Completed)        }
     }
     
     func startTimer() {

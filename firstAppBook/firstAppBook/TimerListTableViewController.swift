@@ -159,11 +159,11 @@ extension TimerListTableViewController : TimerEditViewControllerDelegate {
     
     func timeEditViewControllerDidSave(viewController : TimerEditViewController) {
         let model = viewController.timerModel
-        let type = model.type
+        let type = model?.type
         
         if type == .Coffee {
-            if !coffeeTimers.contains(model) {
-                coffeeTimers.append(model)
+            if !coffeeTimers.contains(model!) {
+                coffeeTimers.append(model!)
             }
             
             teaTimers = teaTimers.filter({ (item) -> Bool in
@@ -171,8 +171,8 @@ extension TimerListTableViewController : TimerEditViewControllerDelegate {
             
             })
         } else { // Type must be .Tea
-            if !teaTimers.contains(model) {
-                teaTimers.append(model)
+            if !teaTimers.contains(model!) {
+                teaTimers.append(model!)
             }
             
             coffeeTimers = coffeeTimers.filter({ (item) -> Bool in

@@ -38,15 +38,15 @@ class TimerEditViewController: UIViewController {
         updateLabelsWithMinutes(numberOfMinutes, seconds: numberOfSeconds)
         minutesSlider.value = Float(numberOfMinutes)
         secondsSlider.value = Float(numberOfSeconds)
-        }
         
-        switch timerModel?.type {
-        case .Coffee?:
+        
+        switch timerModel.type {
+        case .Coffee:
             timerTypeSegmentedControl.selectedSegmentIndex = 0
-        case .Tea?:
+        case .Tea:
             timerTypeSegmentedControl.selectedSegmentIndex = 1
         }
-        
+      }
         // Do any additional setup after loading the view.
     }
     

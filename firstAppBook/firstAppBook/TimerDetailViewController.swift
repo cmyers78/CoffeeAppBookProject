@@ -12,7 +12,14 @@ class TimerDetailViewController: UIViewController {
     
     var timerModel : CoffeeTimerModel!
     
+    @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var startStopButton: UIButton!
+    
+    var timer = NSTimer?()
+    
+    var timeRemaining = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +27,7 @@ class TimerDetailViewController: UIViewController {
         self.title = timerModel.name
         self.durationLabel.text = "\(timerModel.duration / 60) min \(timerModel.duration % 60) sec"
         
+        self.countdownLabel.text = "Timer not started"
         
         // Do any additional setup after loading the view.
     }
@@ -29,6 +37,17 @@ class TimerDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func buttonWasPressed(sender: UIButton) {
+        print("Button was pressed")
+        
+        if let nonOptionalTimer = timer {
+            
+            nonOptionalTimer.invalidate()
+            timer = nil
+        } else {
+            timeRemaining = timerModel.duration
+        }
+    }
 
     /*
     // MARK: - Navigation

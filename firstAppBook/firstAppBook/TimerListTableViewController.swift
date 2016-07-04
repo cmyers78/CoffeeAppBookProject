@@ -106,7 +106,33 @@ class TimerListTableViewController: UITableViewController {
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
+   
+    override func tableView(tableView: UITableView, shouldShowMenuForRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     
+    override func tableView(tableView: UITableView, canPerformAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
+        if action == #selector(NSObject.copy(_:)) {
+            return true
+        }
+        
+        return false
+    }
+    
+    override func tableView(tableView: UITableView, performAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject!) {
+        
+        let timerModel : CoffeeTimerModel = {
+            if indexPath.section == 0 {
+                return self.coffeeTimers[indexPath.row]
+            } else {
+                return self.teaTimers[indexPath.row]
+            }
+        } ()
+        
+        
+        let pasteboard = UIPasteboard.generalPasteboard()
+        pasteboard.string = timerModel.name
+    }
     
    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         

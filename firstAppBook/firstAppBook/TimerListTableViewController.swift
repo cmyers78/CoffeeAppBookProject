@@ -134,6 +134,15 @@ class TimerListTableViewController: UITableViewController {
         pasteboard.string = timerModel.name
     }
     
+    override func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+        
+        if sourceIndexPath.section == 0 {
+            return NSIndexPath(forItem: coffeeTimers.count - 1, inSection: 0)
+        } else {
+            return NSIndexPath(forItem: 0, inSection: 1)
+        }
+    }
+    
    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         if identifier == "pushDetail" {

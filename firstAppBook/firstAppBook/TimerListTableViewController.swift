@@ -151,13 +151,34 @@ class TimerListTableViewController: UITableViewController {
     }
 }
 
-extension TimerListTableViewController: TimerEditViewControllerDelegate {
-    func timerEdiViewControllerDidCancel(viewController: TimerEditViewController) {
+extension TimerListTableViewController : TimerEditViewControllerDelegate {
+    
+    func timeEditViewControllerDidCancel(viewController: TimerEditViewController) {
         
     }
     
-    func timerEdiViewControllerDidSave(viewController: TimerEditViewController) {
+    func timeEditViewControllerDidSave(viewController : TimerEditViewController) {
+        let model = viewController.timerModel
+        let type = model.type
         
+        if type == .Coffee {
+            if !coffeeTimers.contains(model) {
+                coffeeTimers.append(model)
+            }
+            
+            teaTimers = teaTimers.filter({ (item) -> Bool in
+                return item != model
+            
+            })
+        } else { // Type must be .Tea
+            if !teaTimers.contains(model) {
+                teaTimers.append(model)
+            }
+            
+            coffeeTimers = coffeeTimers.filter({ (item) -> Bool in
+                return item != model
+            })
+    }
+    
     }
 }
-

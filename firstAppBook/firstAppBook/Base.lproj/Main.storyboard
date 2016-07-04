@@ -92,6 +92,7 @@
                         <outlet property="nameField" destination="Vnv-N7-Nzc" id="BTe-U9-lyz"/>
                         <outlet property="secondsLabel" destination="Q6C-mk-FrE" id="vOa-tp-qUp"/>
                         <outlet property="secondsSlider" destination="4PQ-cJ-Oka" id="Zg8-Wo-Pmd"/>
+                        <outlet property="timerTypeSegmentedControl" destination="gbn-WF-4Pb" id="RXb-NG-6Ag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oLz-w3-HfU" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -16,34 +16,37 @@ import UIKit
 
 class TimerEditViewController: UIViewController {
     
-    var timerModel : CoffeeTimerModel!
-    
+    var timerModel : CoffeeTimerModel?
     weak var delegate : TimerEditViewControllerDelegate?
     
     @IBOutlet weak var nameField: UITextField!
-
     @IBOutlet weak var minutesLabel: UILabel!
-    
     @IBOutlet weak var minutesSlider: UISlider!
-    
     @IBOutlet weak var secondsLabel: UILabel!
-    
     @IBOutlet weak var secondsSlider: UISlider!
+    @IBOutlet weak var timerTypeSegmentedControl: UISegmentedControl!
     
     var creatingNewTimer = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let timerModel = timerModel {
         let numberOfMinutes = Int(timerModel.duration / 60)
         let numberOfSeconds = Int(timerModel.duration % 60)
         nameField.text = timerModel.name
         updateLabelsWithMinutes(numberOfMinutes, seconds: numberOfSeconds)
         minutesSlider.value = Float(numberOfMinutes)
         secondsSlider.value = Float(numberOfSeconds)
+        }
         
-
+        switch timerModel?.type {
+        case .Coffee?:
+            timerTypeSegmentedControl.selectedSegmentIndex = 0
+        case .Tea?:
+            timerTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -63,8 +66,14 @@ class TimerEditViewController: UIViewController {
     
     @IBAction func doneWasPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        timerModel.name = nameField.text ?? ""
-        timerModel.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
+        timerModel?.name = nameField.text ?? ""
+        timerModel?.duration = Int(minutesSlider.value) * 60 + Int(secondsSlider.value)
+        
+        if timerTypeSegmentedControl.selectedSegmentIndex == 0 {
+            timerModel?.type = .Coffee
+        } else {
+            timerModel?.type = .Tea
+        }
         delegate?.timerEditViewControllerDidSave(self)
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
@@ -93,14 +102,6 @@ class TimerEditViewController: UIViewController {
         
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+    

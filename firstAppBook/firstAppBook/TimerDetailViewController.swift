@@ -49,12 +49,11 @@ class TimerDetailViewController: UIViewController {
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
     }
-
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+//    func application(application : UIApplication) {
+//        didReceiveLocalNotification notification: UILocalNotification)
+//        
+//    }
     
     func timerFired() {
         

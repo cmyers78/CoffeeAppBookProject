@@ -74,6 +74,14 @@ class TimerDetailViewController: UIViewController {
         countdownLabel.text = String(format: "%d:%02d", timeRemaining / 60, timeRemaining % 60)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(TimerDetailViewController.timerFired), userInfo: nil, repeats: true)
+        
+        let localNotification = UILocalNotification()
+        localNotification.alertBody = "Timer Completed!"
+        localNotification.fireDate =
+            NSDate().dateByAddingTimeInterval(NSTimeInterval(timerModel.duration))
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        notification = localNotification
     }
     
     enum StopTimerReason {
@@ -98,6 +106,11 @@ class TimerDetailViewController: UIViewController {
         startStopButton.setTitle("Start", forState: .Normal)
         timer?.invalidate()
         timer = nil
+        
+        if reason == .Cancelled {
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+        }
+        notification = nil
     }
     
     @IBAction func buttonWasPressed(sender: UIButton) {
